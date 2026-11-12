@@ -1,0 +1,9 @@
+# Edge server (Jordan's M5 Mac): FastAPI + YOLO. Includes the client set so the
+# server machine can also run tests and analysis. Python 3.12.
+#   python3.12 -m venv .venv && .venv/bin/pip install -r requirements-server.txt -e .
+-r requirements-client.txt
+fastapi==0.162.5
+uvicorn[standard]==0.54.0
+ultralytics==8.4.211
+torch==2.15.0
+torchvision==0.29.2

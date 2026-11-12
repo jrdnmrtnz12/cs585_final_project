@@ -1,0 +1,12 @@
+# Client (Linux laptop): capture, encode, send, netmon, trial runner, analysis.
+# Exact versions used during development (Python 3.12). Install with:
+#   python3.12 -m venv .venv && .venv/bin/pip install -r requirements-client.txt -e .
+httpx==0.28.1
+mss==10.2.0
+numpy==2.5.4
+opencv-python==5.0.0.93
+pandas==3.1.1
+psutil==7.2.2
+pydantic==2.14.3
+PyYAML==6.0.3
+pytest==9.2.0

@@ -1,0 +1,35 @@
+# Network impairment scenarios, applied by netem/netem.sh on the CLIENT's
+# uplink egress, filtered to traffic toward the edge server only.
+#
+# delay_ms   : added one-way delay on the uplink, so it adds this much RTT
+# loss_pct   : random packet loss on the uplink
+# rate_mbit  : uplink rate cap; null means uncapped
+#
+# PROVISIONAL. Set rate caps from MEASURED profile bitrates (docs/spec.md, Part 1 #4):
+#   moderate cap: between the Medium and High profile bitrates
+#   poor cap:     between the Low and Medium profile bitrates
+# Every scenario must be verified with netem/verify.sh before it is used.
+
+scenarios:
+  good:
+    delay_ms: 0
+    loss_pct: 0
+    rate_mbit: null
+  moderate:
+    delay_ms: 30
+    loss_pct: 1
+    rate_mbit: 10
+  poor:
+    delay_ms: 80
+    loss_pct: 3
+    rate_mbit: 2
+
+# Time-varying schedules. Each step's scenario holds until the next step.
+schedules:
+  dynamic:
+    duration_s: 80
+    steps:
+      - {at_s: 0, scenario: good}
+      - {at_s: 20, scenario: poor}
+      - {at_s: 40, scenario: moderate}
+      - {at_s: 60, scenario: good}

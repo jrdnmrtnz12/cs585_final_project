@@ -1,0 +1,32 @@
+# Encoding profiles. STARTING VALUES ONLY: calibrate in the pilot (docs/spec.md section 4).
+#
+# All profiles are 16:9, so a 16:9 source is never distorted. A source with a
+# different aspect ratio is center-cropped to 16:9 before resizing
+# (edge/client/encoder.py).
+#
+# est_bytes seeds the adaptive controller's per-profile frame-size estimate
+# until real frames have been sent at that profile. PROVISIONAL: replace with
+# the mean_jpeg_bytes column from analysis/accuracy_offline.py run on the real
+# test video.
+
+order: [low, medium, high]   # adaptive ladder, lowest to highest
+
+profiles:
+  low:
+    width: 320
+    height: 180
+    jpeg_quality: 45
+    fps: 5
+    est_bytes: 6000
+  medium:
+    width: 640
+    height: 360
+    jpeg_quality: 70
+    fps: 10
+    est_bytes: 25000
+  high:
+    width: 1280
+    height: 720
+    jpeg_quality: 90
+    fps: 15
+    est_bytes: 120000

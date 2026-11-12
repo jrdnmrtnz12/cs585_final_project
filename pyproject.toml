@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cs585-adaptive-edge"
+version = "0.1.0"
+description = "CS 585 Team 7: adaptive edge offloading for smart-glasses-style object detection under changing network conditions"
+requires-python = ">=3.10"
+# Shared by client and server. Exact versions used in experiments are pinned in requirements-*.txt.
+dependencies = [
+  "numpy",
+  "opencv-python",
+  "pyyaml",
+  "pydantic>=2",
+  "psutil",
+]
+
+[project.optional-dependencies]
+server = ["fastapi", "uvicorn[standard]", "ultralytics"]
+client = ["httpx", "mss"]
+analysis = ["pandas"]
+dev = ["pytest", "fastapi", "uvicorn[standard]", "httpx", "mss", "pandas"]
+
+[tool.setuptools.packages.find]
+include = ["edge*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "yolo: needs ultralytics and model weights (deselect with -m 'not yolo')",
+  "linux: needs Linux tc",
+]

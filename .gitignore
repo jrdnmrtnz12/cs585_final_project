@@ -1,0 +1,24 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# Model weights and large data (documented in data/README.md, not committed)
+*.pt
+*.onnx
+data/*
+!data/README.md
+models/
+
+# Captures and local scratch
+*.pcap
+*.pcapng
+results/raw/_smoke*/
+results/raw/_test*/
+
+# Editor / tool folders
+.vscode/
+.idea/
+.DS_Store

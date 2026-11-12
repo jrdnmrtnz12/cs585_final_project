@@ -1,0 +1,41 @@
+# Experiment settings. Machine-specific values (server address, interface)
+# can be overridden on the command line or with environment variables:
+#   EDGE_SERVER   server IP or hostname
+#   NETEM_IF      client network interface for tc/netem (Linux only)
+
+server:
+  host: 127.0.0.1
+  http_port: 8000
+  udp_port: 9000
+
+client:
+  source: synthetic          # screen | video | synthetic (screen is the experiment mode)
+  video_path: data/test_video.mp4
+  monitor: 1                 # mss monitor index used when screen_region is null
+  screen_region: null        # e.g. {left: 0, top: 0, width: 1280, height: 720}
+  request_timeout_s: 3.0
+
+trial:
+  duration_s: 60             # dynamic schedules use their own duration_s
+  warmup_s: 5                # excluded from analysis, still logged
+  results_dir: results/raw
+
+controller:
+  target_ms: 300             # PROVISIONAL: response-time target, finalize after pilot
+  stale_factor: 2.0          # response counts as stale if latency > stale_factor * target
+  window_s: 1.0              # control/measurement window
+  upgrade_margin: 0.7        # upgrade only if predicted latency < margin * target
+  upgrade_windows: 3         # consecutive good windows required to upgrade
+  cooldown_s: 2.0            # base cooldown after any profile change
+  max_cooldown_s: 16.0       # cap for the doubled cooldown after a failed upgrade
+  loss_hi_pct: 2.0           # PROVISIONAL: downgrade if probe loss above this
+  loss_lo_pct: 0.5           # PROVISIONAL: upgrade only if probe loss below this
+  use_loss_signal: true      # false = ablation (RTT + goodput only)
+  start_profile: medium
+  size_ewma_alpha: 0.2
+
+netmon:
+  probe_hz: 20               # UDP probes per second (64-byte payload each)
+  probe_timeout_s: 1.0       # a probe with no echo after this long counts as lost
+  goodput_ewma_alpha: 0.3
+  min_transfer_ms: 5.0       # ignore goodput samples with less transfer time (too noisy)
