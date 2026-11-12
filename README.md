@@ -5,7 +5,7 @@ edge server running YOLO object detection. We compare **Fixed High**, **Fixed Lo
 that changes resolution, JPEG quality, and frame rate based on measured RTT, upload goodput, and packet loss, under
 emulated Good / Moderate / Poor / Dynamic network conditions.
 
-**Read [docs/spec.md](docs/spec.md) first.** It covers scope, design, the schedule, and who owns what.
+**Read [docs/spec.md](docs/spec.md) first.** It covers scope, design, and the schedule.
 Testbed details go in [docs/testbed.md](docs/testbed.md).
 
 ## Status (Nov 11)

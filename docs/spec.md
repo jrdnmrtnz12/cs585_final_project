@@ -4,9 +4,6 @@ This is the single source of truth for scope, design, and schedule. Give it to a
 tool you use, as context before working on the repo. If something here conflicts with the approved
 proposal, the proposal wins unless the team explicitly agrees to change it.
 
-**Team:** Andres/Victor Andrade (client capture/encoding, literature) · Dmitri Azih (testbed, netem, automation) ·
-Jordan Martinez (edge server, detection, adaptive controller) · Ben Miller (integration, instrumentation, analysis)
-
 ---
 
 ## 1. Research question (unchanged from the proposal)
@@ -40,7 +37,7 @@ Strategies: **Fixed High**, **Fixed Low**, **Adaptive** (moves between Low / Med
 ```
 [Looping test video, fullscreen on client display]
           | screen capture (mss; X11 session on Linux)
-[CLIENT: Linux laptop]                                 [EDGE SERVER: Jordan's M5 Mac]
+[CLIENT: Linux laptop]                                 [EDGE SERVER: Apple M5 Mac]
   capture -> encode -> HTTP POST /infer   ---------->   FastAPI :8000  (/health, /infer, /stats)
   UDP probes -> :9000                     ---------->   UDP echo :9000
   tc/netem on Wi-Fi egress, filtered to server IP       YOLO11n on MPS, loaded once
@@ -63,25 +60,25 @@ Strategies: **Fixed High**, **Fixed Low**, **Adaptive** (moves between Low / Med
 
 ## 4. Software
 
-| Path | Owner | Role |
-|---|---|---|
-| `edge/protocol.py` | Ben/Jordan | Wire format: headers, JSON response schema, UDP probe format |
-| `edge/config.py` + `config/*.yaml` | Jordan | Load and validate profiles, scenarios, experiment settings |
-| `edge/logging_utils.py` | Ben | Fixed CSV schemas, never-overwrite trial dirs |
-| `edge/server/app.py`, `__main__.py` | Jordan | FastAPI `/health`, `/infer`, `/stats`. Single worker, model loaded once |
-| `edge/server/detector.py` | Jordan | `MockDetector` (no boxes, `mock: true`) and `YoloDetector` |
-| `edge/server/udp_echo.py` | Jordan | Echo for RTT/loss probes |
-| `edge/client/capture.py` | Andres | `ScreenSource` (experiment), `VideoFileSource` + `SyntheticSource` (dev only) |
-| `edge/client/encoder.py` | Andres | Center-crop to 16:9 if needed → resize → JPEG |
-| `edge/client/sender.py` | Ben | Capture thread, latest-frame slot, persistent HTTP sender |
-| `edge/client/netmon.py` | Jordan | UDP prober (base/median RTT, loss) and goodput estimator |
-| `edge/client/session.py` | Ben/Jordan | Wires it together. Control loop every 1 s |
-| `edge/adaptation/controller.py` | Jordan | `FixedPolicy`, `AdaptiveController` |
-| `netem/netem.sh`, `netem/verify.sh` | Dmitri | Apply/change/reset impairment. Verify with ping + iperf3 |
-| `experiments/run_trial.py`, `run_matrix.py` | Dmitri/Ben | One trial / randomized resumable matrix |
-| `analysis/accuracy_offline.py` | Jordan | Per-profile agreement + bitrate calibration table |
-| `analysis/summarize.py` | Ben | Per-trial and per-cell stats with 95% t-intervals |
-| `analysis/plots.py` | Ben | **TODO**: figures in section 9 |
+| Path | Role |
+|---|---|
+| `edge/protocol.py` | Wire format: headers, JSON response schema, UDP probe format |
+| `edge/config.py` + `config/*.yaml` | Load and validate profiles, scenarios, experiment settings |
+| `edge/logging_utils.py` | Fixed CSV schemas, never-overwrite trial dirs |
+| `edge/server/app.py`, `__main__.py` | FastAPI `/health`, `/infer`, `/stats`. Single worker, model loaded once |
+| `edge/server/detector.py` | `MockDetector` (no boxes, `mock: true`) and `YoloDetector` |
+| `edge/server/udp_echo.py` | Echo for RTT/loss probes |
+| `edge/client/capture.py` | `ScreenSource` (experiment), `VideoFileSource` + `SyntheticSource` (dev only) |
+| `edge/client/encoder.py` | Center-crop to 16:9 if needed → resize → JPEG |
+| `edge/client/sender.py` | Capture thread, latest-frame slot, persistent HTTP sender |
+| `edge/client/netmon.py` | UDP prober (base/median RTT, loss) and goodput estimator |
+| `edge/client/session.py` | Wires it together. Control loop every 1 s |
+| `edge/adaptation/controller.py` | `FixedPolicy`, `AdaptiveController` |
+| `netem/netem.sh`, `netem/verify.sh` | Apply/change/reset impairment. Verify with ping + iperf3 |
+| `experiments/run_trial.py`, `run_matrix.py` | One trial / randomized resumable matrix |
+| `analysis/accuracy_offline.py` | Per-profile agreement + bitrate calibration table |
+| `analysis/summarize.py` | Per-trial and per-cell stats with 95% t-intervals |
+| `analysis/plots.py` | **TODO**: figures in section 9 |
 
 ### Protocol
 `POST /infer`: body = raw JPEG, headers `X-Frame-Id` (required), `X-Trial-Id`, `X-Profile`. The response gives
@@ -168,7 +165,7 @@ time since trial start.
 
 | When | Work |
 |---|---|
-| **Wk 13 · Nov 11–15** | Jordan: scaffold, server, controller, local end-to-end ✅. Andres: pick and license video; ScreenSource on Linux/Xorg; measure capture FPS. Dmitri: configure Opal; client Wi-Fi; validate netem.sh with verify.sh. Ben: review schemas; `plots.py` on smoke data |
+| **Wk 13 · Nov 11–15** | Scaffold, server, controller, local end-to-end ✅. Pick and license the video. Test ScreenSource on Linux/Xorg and measure capture FPS. Configure the Opal and client Wi-Fi. Validate netem.sh with verify.sh. Start `plots.py` on smoke data |
 | **Wk 14 · Nov 16–18** | Integrate on testbed. Per-profile bitrate + accuracy table on the real video. Check netmon against netem (probe loss ≈ configured? goodput tracks cap?) |
 | **Nov 19** | Calibrate caps and T. Pilot: 1 rep × 12 cells (~15 min). Fix issues |
 | **Nov 20** | **Freeze protocol** (git tag `protocol-v1`). Pilot = preliminary data for any checkpoint |

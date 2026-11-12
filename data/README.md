@@ -7,7 +7,7 @@ Video and model files are **not committed**. This file records what we used so a
 | Field | Value |
 |---|---|
 | File name | `data/test_video.mp4` |
-| Source URL | _TODO (Andres)_ |
+| Source URL | _TODO_ |
 | License | _TODO: must allow reuse (e.g. Pexels license / CC0)_ |
 | Resolution / fps / length | _TODO_ |
 | SHA-256 | _TODO: `shasum -a 256 data/test_video.mp4`_ |

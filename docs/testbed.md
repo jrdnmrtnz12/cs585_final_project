@@ -1,4 +1,4 @@
-# Testbed record (owner: Dmitri)
+# Testbed record
 
 Fill this in as the testbed is built. Every trial's results depend on these values, so update the
 "last verified" date whenever something changes.
@@ -18,7 +18,7 @@ Fill this in as the testbed is built. Every trial's results depend on these valu
 
 | Field | Value |
 |---|---|
-| Owner / model | _TODO_ |
+| Laptop model | _TODO_ |
 | OS / kernel (`uname -a`) | _TODO_ |
 | Session type (`echo $XDG_SESSION_TYPE`) | must be `x11` |
 | Wi-Fi interface (`ip link`), driver (`ethtool -i <if>`) | _TODO_ (built-in or AX9L / mt7921u) |
