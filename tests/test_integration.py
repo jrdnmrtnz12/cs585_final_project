@@ -69,8 +69,11 @@ def test_fixed_low_end_to_end(tmp_path):
     ids = [int(f["frame_id"]) for f in frames]
     assert len(ids) == len(set(ids)) and ids == sorted(ids)
     for f in frames:
-        assert int(f["capture_ns"]) <= int(f["send_ns"]) <= int(f["recv_ns"])
-        assert float(f["latency_ms"]) >= float(f["request_rtt_ms"]) > 0
+        capture_ns, send_ns, recv_ns = (int(f[k]) for k in ("capture_ns", "send_ns", "recv_ns"))
+        assert capture_ns <= send_ns < recv_ns
+        # Assert positivity on the raw clock values. Rounded CSV milliseconds
+        # alone can hide sub-millisecond intervals.
+        assert float(f["latency_ms"]) >= float(f["request_rtt_ms"]) >= 0
         assert (f["width_px"], f["height_px"]) == ("320", "180")
     net = _rows(tmp_path / "netmon.csv")
     assert len(net) >= 2

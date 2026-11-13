@@ -1,0 +1,134 @@
+{
+  "trial_id": "20261112-205114_adaptive_none_r1",
+  "label": "dev",
+  "strategy": "adaptive",
+  "scenario": "none",
+  "rep": 1,
+  "started_at": "2026-11-13T03:51:14.060027+00:00",
+  "duration_s": 10.0,
+  "warmup_s": 5.0,
+  "target_ms": 300,
+  "stale_ms": 600.0,
+  "source": {
+    "kind": "video",
+    "video_path": "18516073-hd_1920_1080_30fps.mp4",
+    "monitor": 1,
+    "region": null
+  },
+  "server": {
+    "base_url": "http://127.0.0.1:8000",
+    "health": {
+      "status": "ok",
+      "detector": "mock",
+      "mock": true,
+      "device": "none",
+      "imgsz": 640,
+      "conf": 0.25,
+      "weights": null,
+      "library_version": null
+    }
+  },
+  "config": {
+    "profiles": {
+      "low": {
+        "name": "low",
+        "width": 320,
+        "height": 180,
+        "jpeg_quality": 45,
+        "fps": 5,
+        "est_bytes": 6000
+      },
+      "medium": {
+        "name": "medium",
+        "width": 640,
+        "height": 360,
+        "jpeg_quality": 70,
+        "fps": 10,
+        "est_bytes": 25000
+      },
+      "high": {
+        "name": "high",
+        "width": 1280,
+        "height": 720,
+        "jpeg_quality": 90,
+        "fps": 15,
+        "est_bytes": 120000
+      }
+    },
+    "ladder": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "scenario": null,
+    "scenario_values": null,
+    "controller": {
+      "target_ms": 300,
+      "stale_factor": 2.0,
+      "window_s": 1.0,
+      "upgrade_margin": 0.7,
+      "upgrade_windows": 3,
+      "cooldown_s": 2.0,
+      "max_cooldown_s": 16.0,
+      "loss_hi_pct": 2.0,
+      "loss_lo_pct": 0.5,
+      "use_loss_signal": true,
+      "start_profile": "medium",
+      "size_ewma_alpha": 0.2
+    },
+    "netmon": {
+      "probe_hz": 20,
+      "probe_timeout_s": 1.0,
+      "goodput_ewma_alpha": 0.3,
+      "min_transfer_ms": 5.0
+    }
+  },
+  "host": {
+    "platform": "macOS-26.2-arm64-arm-64bit",
+    "python": "3.12.16",
+    "packages": {
+      "numpy": "2.5.4",
+      "opencv-python": "5.0.0.93",
+      "httpx": "0.28.1",
+      "mss": "10.2.0",
+      "pydantic": "2.14.3",
+      "psutil": "7.2.2",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "git": {
+    "commit": "768907f8a50295637fdb6200a3d5a30afe400599",
+    "dirty": true
+  },
+  "server_resources": {
+    "n_samples": 10,
+    "cpu_pct_mean": 5.29,
+    "cpu_pct_max": 8.5,
+    "rss_mb_max": 97.599488
+  },
+  "netem": {
+    "enabled": false,
+    "dry_run": false,
+    "interface": null,
+    "commands": []
+  },
+  "result": {
+    "status": "complete",
+    "duration_s": 10.0,
+    "captured": 130,
+    "capture_error": null,
+    "sent": 130,
+    "ok": 130,
+    "timeout": 0,
+    "http_error": 0,
+    "conn_error": 0,
+    "superseded": 0
+  },
+  "finished_at": "2026-11-13T03:51:24.409727+00:00",
+  "completeness": {
+    "ok": true,
+    "frames_rows": 130,
+    "netmon_rows": 10,
+    "expected_windows": 10
+  }
+}

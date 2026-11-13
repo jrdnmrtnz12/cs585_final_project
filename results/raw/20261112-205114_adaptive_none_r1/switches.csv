@@ -1,0 +1,2 @@
+trial_id,t_ns,from_profile,to_profile,reason,rtt_ms,loss_pct,goodput_mbps,latency_ms_median,predicted_ms
+20261112-205114_adaptive_none_r1,4005090958,medium,high,probe,0.122,0.000,,26.174,

@@ -74,9 +74,13 @@ class Netem:
 
 def _git_info() -> dict[str, object]:
     def git(*a: str) -> str | None:
-        r = subprocess.run(["git", *a], cwd=REPO_ROOT, capture_output=True, text=True)
+        try:
+            r = subprocess.run(["git", *a], cwd=REPO_ROOT, capture_output=True, text=True)
+        except FileNotFoundError:
+            return None  # archive-based client setup may not have Git installed
         return r.stdout.strip() if r.returncode == 0 else None
-    return {"commit": git("rev-parse", "--verify", "-q", "HEAD"), "dirty": bool(git("status", "--porcelain"))}
+    commit = git("rev-parse", "--verify", "-q", "HEAD")
+    return {"commit": commit, "dirty": bool(git("status", "--porcelain")) if commit else None}
 
 
 def _versions() -> dict[str, str | None]:

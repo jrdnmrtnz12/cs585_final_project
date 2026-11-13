@@ -7,7 +7,8 @@ Threads:
   caller    the control loop: once per window it computes WindowStats, asks
             the policy for a decision, and writes netmon/switch/resource rows
 
-All timestamps use one clock: time.monotonic_ns() minus the trial start.
+All timestamps use one high-resolution monotonic clock: time.perf_counter_ns()
+minus the trial start.
 """
 from __future__ import annotations
 
@@ -40,8 +41,8 @@ class ClientSession:
                  trial_id: str, trial_dir: Path, source: FrameSource, server_host: str):
         self.exp, self.profiles, self.policy = exp, profiles, policy
         self.trial_id = trial_id
-        self._t0 = time.monotonic_ns()
-        self.clock_ns: Callable[[], int] = lambda: time.monotonic_ns() - self._t0
+        self._t0 = time.perf_counter_ns()
+        self.clock_ns: Callable[[], int] = lambda: time.perf_counter_ns() - self._t0
 
         d = Path(trial_dir)
         self.frames = CsvLog(d / "frames.csv", FRAMES_COLUMNS, trial_id)

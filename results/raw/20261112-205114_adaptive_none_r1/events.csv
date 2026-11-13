@@ -1,0 +1,4 @@
+trial_id,t_ns,event,frame_id,detail
+20261112-205114_adaptive_none_r1,4461625,scenario,,none
+20261112-205114_adaptive_none_r1,5040792,start,,profile=medium
+20261112-205114_adaptive_none_r1,10002803208,stop,,complete

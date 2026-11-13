@@ -7,12 +7,12 @@ Fill this in as the testbed is built. Every trial's results depend on these valu
 
 | Field | Value |
 |---|---|
-| Firmware version (admin UI → System) | _TODO_ |
+| Firmware version (admin UI) | 4.8.3 |
 | Mode | Router, WAN unplugged during trials |
-| LAN subnet / router IP | 10.58.5.0/24 / 10.58.5.1 _(confirm)_ |
-| SSID / security | cs585-testbed / WPA2 |
-| Band / channel / width | 5 GHz / _TODO (non-DFS, e.g. 36)_ / _TODO (e.g. 80 MHz)_ |
-| DHCP reservations | server 10.58.5.10, client 10.58.5.20 _(confirm)_ |
+| LAN subnet / router IP | 10.58.5.0/24 / 10.58.5.1 (verified Nov 12) |
+| SSID / security | cs585-testbed / WPA2-PSK (verified Nov 12) |
+| Band / channel / width | 5 GHz / 36 / 80 MHz; randomized BSSID off (verified Nov 12) |
+| DHCP reservations | server Mac Ethernet 10.58.5.10 (verified); Linux client 10.58.5.20 _pending_ |
 
 ## Client (Linux laptop)
 
@@ -32,9 +32,9 @@ Fill this in as the testbed is built. Every trial's results depend on these valu
 
 | Field | Value |
 |---|---|
-| macOS version | 26.6 |
-| Connection to router | _TODO: Ethernet via USB-C adapter, or Wi-Fi (document double wireless hop)_ |
-| IP | 10.58.5.10 _(confirm)_ |
+| macOS version | 26.2 (verified Nov 12) |
+| Connection to router | Built-in Ethernet (en0) to Opal LAN port (verified Nov 12) |
+| IP | 10.58.5.10 on Ethernet (verified Nov 12) |
 | Firewall | allow incoming TCP 8000 and UDP 9000 for Python |
 | Keep awake during trials | `caffeinate -dimsu` in a terminal |
 | Detector | `python -m edge.server --detector yolo` (yolo11n, MPS) |
@@ -52,4 +52,4 @@ Responses take the reverse path without impairment.
 |---|---|---|---|---|
 | | | | | `results/calibration/...` |
 
-Last verified: _TODO_
+Last verified: 2026-11-12 (router LAN, DHCP, 5 GHz settings, Mac address and routing; Linux client pending)
